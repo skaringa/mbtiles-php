@@ -230,7 +230,8 @@ class MapTileController extends BaseClass {
 	}
 
 	protected function etag($type) {
-		return sha1(sprintf("%s-%s-%s-%s-%s", $this->layer, $this->x, $this->y, $this->z, $type));
+		$filemtime = filemtime($this->getMBTilesName());
+		return sha1(sprintf("%s-%s-%s-%s-%s-%s", $this->layer, $filemtime, $this->x, $this->y, $this->z, $type));
 	}
 
 	protected function checkCache($etag) {
