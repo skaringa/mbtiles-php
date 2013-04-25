@@ -230,7 +230,7 @@ class MapTileController extends BaseClass {
 	}
 
 	protected function etag($type) {
-		return sha1(sprintf("%s-%s-%s-%s-%s", $this->tileset, $this->x, $this->y, $this->z, $type));
+		return sha1(sprintf("%s-%s-%s-%s-%s", $this->layer, $this->x, $this->y, $this->z, $type));
 	}
 
 	protected function checkCache($etag) {
@@ -255,10 +255,6 @@ class MapTileController extends BaseClass {
 	protected function imageTile() {
 		$etag = $this->etag("img");
 		$this->checkCache($etag);
-
-		if ($this->is_tms) {
-			$this->tileset = substr($this->tileset, 0, strlen($this->tileset) - 4);
-		}
 
 		try {
 			$this->openDB();
@@ -308,12 +304,6 @@ class MapTileController extends BaseClass {
 		$this->openDB();
 
 		try {
-			$flip = true;
-			if ($this->is_tms) {
-				$this->tileset = substr($this->tileset, 0, strlen($this->tileset) - 4);
-				$flip = false;
-			}
-
 			$result = $this->db->query('select grid as g from grids where zoom_level=' . $this->z . ' and tile_column=' . $this->x . ' and tile_row=' . $this->y);
 
 			$data = $result->fetchColumn();
