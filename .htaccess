@@ -2,4 +2,5 @@ Options -Indexes
 Options +FollowSymLinks
 Options -MultiViews
 RewriteEngine On
+RewriteBase /mbtiles-php/
 RewriteRule ^(.*)$ tileserver.php [QSA,L]
