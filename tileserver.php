@@ -367,7 +367,8 @@ class MapTileController extends BaseClass {
 			}
 
 			// find out the absolute path to this script
-			$server_url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["REQUEST_URI"]);
+			$protocol   = empty($_SERVER["HTTPS"]) ? "http" : "https";
+			$server_url = $protocol . "://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["REQUEST_URI"]);
 			$tilejson['tiles'] = array(
 				$server_url . "/" . urlencode($layer) . "/{z}/{x}/{y}.png"
 			);
@@ -526,7 +527,8 @@ EOF;
 	}
 
 	function getBaseUrl() {
-		return 'http://' . $_SERVER['HTTP_HOST'] . preg_replace('/\/(1.0.0\/)?[^\/]*$/', '/', $_SERVER['REQUEST_URI']);
+	    $protocol = empty($_SERVER["HTTPS"]) ? "http" : "https";
+	    return $protocol . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/\/(1.0.0\/)?[^\/]*$/', '/', $_SERVER['REQUEST_URI']);
 	}
 }
 
